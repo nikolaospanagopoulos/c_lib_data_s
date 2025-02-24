@@ -1,12 +1,12 @@
 #include "SLL.h"
 #include <stdio.h>
 
-void print_data(struct list *list) {
-  struct node *tmp_node = list->head;
-  while (tmp_node) {
-    printf("node data: %.2f\n", *(double *)tmp_node->data);
-    tmp_node = tmp_node->next_node;
+void print_data(void *data) {
+  if (!data) {
+    return;
   }
+  double data_to_print = *(double *)data;
+  printf("data : %.2f\n", data_to_print);
 }
 
 int main() {
@@ -29,7 +29,7 @@ int main() {
 
   printf("exists: %d\n", list->node_exists(list, &tocompare, sizeof(double)));
 
-  list->print(list);
+  list->print_list(list);
 
   list->free_list(list);
   free(list);

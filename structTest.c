@@ -37,17 +37,14 @@ void *copy(struct list *list, void *data) {
   return new_person;
 }
 
-void print_data_struct(struct list *list) {
+void print_data_struct(void *data) {
 
-  struct node *tmp_node = list->head;
-
-  while (tmp_node) {
-
-    printf("person name: %s, person age: %d\n",
-           ((struct person *)tmp_node->data)->name,
-           ((struct person *)tmp_node->data)->age);
-    tmp_node = tmp_node->next_node;
+  if (!data) {
+    return;
   }
+  struct person *person = (struct person *)data;
+
+  printf("person name: %s, person age: %d\n", person->name, person->age);
 }
 
 int main() {
@@ -70,9 +67,10 @@ int main() {
   list->pop_back(list);
   list->pop_back(list);
   list->add_front(list, &to_insert_front, sizeof(to_insert_front));
-  printf("exists: %d\n", list->node_exists(list, &to_check, sizeof(to_check)));
+  printf("exists: %d\n",
+         list->node_exists(list, &created_person, sizeof(created_person)));
 
-  list->print(list);
+  list->print_list(list);
   list->free_list(list);
 
   free(list);

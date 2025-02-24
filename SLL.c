@@ -3,6 +3,17 @@
 #include <stdlib.h>
 #include <string.h>
 
+void print_list(const struct list *list) {
+  if (!list) {
+    return;
+  }
+  struct node *tmp = list->head;
+  while (tmp) {
+    list->print(tmp->data);
+    tmp = tmp->next_node;
+  }
+}
+
 bool compare(struct list *list, void *data, void *data2, size_t data_size) {
   return memcmp(data, data2, data_size) == 0;
 }
@@ -240,6 +251,7 @@ void initialize_list(struct list **list, void *print_data, void *create_node_fn,
   (*list)->get_size = &get_size;
   (*list)->insert_node = &insert_node;
   (*list)->print = print_data;
+  (*list)->print_list = &print_list;
   if (create_node_fn != NULL) {
     (*list)->create_node = create_node_fn;
   } else {
