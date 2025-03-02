@@ -106,8 +106,6 @@ int delete_node(struct list *list, int index) {
     if (index == tmp_index) {
       if (prev) {
         prev->next_node = tmp_node->next_node;
-        // free(tmp_node->data);
-        // free(tmp_node);
         free_node(list, tmp_node);
         return 0;
       }
@@ -171,6 +169,7 @@ void free_list(struct list *list) {
   }
   list->head = NULL;
   list->tail = NULL;
+  free(list);
 }
 
 int get_size(struct list *list) {
@@ -194,20 +193,20 @@ void add_front(struct list *list, void *data, size_t data_size) {
   list->head = new_node;
 }
 
-void insert_node(struct list *list, int index, void *data, size_t data_size) {
+int insert_node(struct list *list, int index, void *data, size_t data_size) {
 
   if (index > list->get_size(list) || !list || index < 0) {
-    return;
+    return -1;
   }
 
   if (index == list->get_size(list)) {
     addNode(list, data_size, data);
-    return;
+    return 0;
   }
 
   if (index == 0) {
     add_front(list, data, data_size);
-    return;
+    return 0;
   }
 
   struct node *new_node = list->create_node(list, data_size, data);
@@ -232,6 +231,7 @@ void insert_node(struct list *list, int index, void *data, size_t data_size) {
     tmp_node = tmp_node->next_node;
     tmp_index++;
   }
+  return 0;
 }
 void initialize_list(struct list **list, void *print_data, void *create_node_fn,
                      void *deep_copy, void *special_free, void *compare_func) {

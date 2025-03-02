@@ -1,16 +1,7 @@
 #include "SLL.h"
 #include <stdio.h>
 
-void print_data_str(struct list *list) {
-
-  struct node *tmp_node = list->head;
-
-  while (tmp_node) {
-
-    printf("node data: %s\n", (char *)tmp_node->data);
-    tmp_node = tmp_node->next_node;
-  }
-}
+void print_data_str(void *data) { printf("node data: %s\n", (char *)data); }
 
 int main() {
 
@@ -43,9 +34,8 @@ int main() {
   }
   printf("---------------------------------------\n");
 
-  string_list->print(string_list);
+  string_list->print_list(string_list);
 
   string_list->free_list(string_list);
-  free(string_list);
   return 0;
 }

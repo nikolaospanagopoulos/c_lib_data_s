@@ -73,7 +73,5 @@ int main() {
   list->print_list(list);
   list->free_list(list);
 
-  free(list);
-
   return 0;
 }

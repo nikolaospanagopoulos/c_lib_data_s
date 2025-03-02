@@ -17,8 +17,8 @@ struct list {
   void (*print)(void *data);
   void (*free_list)(struct list *list);
   int (*get_size)(struct list *list);
-  void (*insert_node)(struct list *list, int index, void *data,
-                      size_t data_size);
+  int (*insert_node)(struct list *list, int index, void *data,
+                     size_t data_size);
   int (*delete_node_at_index)(struct list *list, int index);
   int (*pop_front)(struct list *list);
   int (*pop_back)(struct list *list);
@@ -81,7 +81,7 @@ void addNode(struct list *list, size_t data_size, void *data);
 void free_list(struct list *list);
 int get_size(struct list *list);
 void add_front(struct list *list, void *data, size_t data_size);
-void insert_node(struct list *list, int index, void *data, size_t data_size);
+int insert_node(struct list *list, int index, void *data, size_t data_size);
 void initialize_list(struct list **list, void *print_data, void *create_node,
                      void *deep_copy, void *special_free, void *compare_func);
 struct node *create_node_str(struct list *list, size_t data_size, void *data);
