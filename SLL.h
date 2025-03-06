@@ -26,8 +26,9 @@ struct list {
   void *(*copy)(struct list *list, void *data);
   void (*free_special)(void *data);
   bool (*compare)(struct list *list, void *data, void *data2, size_t data_size);
-  bool (*node_exists)(struct list *list, void *data, size_t data_size);
+  int (*node_exists)(struct list *list, void *data, size_t data_size);
   void (*print_list)(const struct list *list);
+  void *(*get_node_at_index)(struct list *list, size_t index);
 };
 
 /**
@@ -85,5 +86,6 @@ int insert_node(struct list *list, int index, void *data, size_t data_size);
 void initialize_list(struct list **list, void *print_data, void *create_node,
                      void *deep_copy, void *special_free, void *compare_func);
 struct node *create_node_str(struct list *list, size_t data_size, void *data);
-bool node_exists(struct list *list, void *data, size_t data_size);
+int node_exists(struct list *list, void *data, size_t data_size);
 void print_list(const struct list *list);
+void *get_node_at_index(struct list *list, size_t index);

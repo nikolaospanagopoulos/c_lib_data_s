@@ -67,8 +67,11 @@ int main() {
   list->pop_back(list);
   list->pop_back(list);
   list->add_front(list, &to_insert_front, sizeof(to_insert_front));
-  printf("exists: %d\n",
-         list->node_exists(list, &created_person, sizeof(created_person)));
+  list->addNode(list, sizeof(struct person), &to_check);
+  int found_index = list->node_exists(list, &to_check, sizeof(struct person));
+  printf("index : %d\n", found_index);
+  struct person *found = list->get_node_at_index(list, found_index);
+  printf("found person name %s, age %d\n", found->name, found->age);
 
   list->print_list(list);
   list->free_list(list);

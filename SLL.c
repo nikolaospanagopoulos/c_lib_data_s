@@ -3,6 +3,26 @@
 #include <stdlib.h>
 #include <string.h>
 
+void *get_node_at_index(struct list *list, size_t index) {
+  int list_size;
+  if (!list || index >= (list_size = list->get_size(list)) || index < 0) {
+    return NULL;
+  }
+
+  struct node *tmp = list->head;
+  int tmp_index = 0;
+  while (tmp) {
+
+    if (tmp_index == index) {
+      return tmp->data;
+    }
+
+    tmp = tmp->next_node;
+    tmp_index++;
+  }
+  return NULL;
+}
+
 void print_list(const struct list *list) {
   if (!list) {
     return;
@@ -17,20 +37,22 @@ void print_list(const struct list *list) {
 bool compare(struct list *list, void *data, void *data2, size_t data_size) {
   return memcmp(data, data2, data_size) == 0;
 }
-bool node_exists(struct list *list, void *data, size_t data_size) {
+int node_exists(struct list *list, void *data, size_t data_size) {
   if (!list) {
-    return false;
+    return -1;
   }
   struct node *tmp_node = list->head;
+  int tmp_index = 0;
   while (tmp_node) {
 
     if (list->compare(list, tmp_node->data, data, data_size)) {
-      return true;
+      return tmp_index;
     }
 
     tmp_node = tmp_node->next_node;
+    tmp_index++;
   }
-  return false;
+  return -1;
 }
 
 void free_node(struct list *list, struct node *node) {
@@ -268,6 +290,7 @@ void initialize_list(struct list **list, void *print_data, void *create_node_fn,
   (*list)->pop_back = &pop_back;
   (*list)->copy = deep_copy;
   (*list)->free_special = special_free;
+  (*list)->get_node_at_index = &get_node_at_index;
 }
 struct node *create_node_str(struct list *list, size_t data_size, void *data) {
   struct node *new_node = (struct node *)malloc(sizeof(struct node));
