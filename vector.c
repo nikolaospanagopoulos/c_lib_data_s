@@ -3,6 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+void *get(struct vector *vec, size_t index) {
+  if (!vec || index >= vec->size) {
+    return NULL;
+  }
+  return vec->arr[index];
+}
+
 int compare(void *element1, void *element2, size_t data_size) {
   if (!element1 || !element2) {
     return -1;
@@ -149,6 +156,7 @@ void initialize_vector(struct vector **to_init, void *special_free, void *print,
   }
   (*to_init)->exists = &exists;
   (*to_init)->copy = copy_func;
+  (*to_init)->get = &get;
 }
 
 int append(struct vector *vector, void *data, size_t data_size) {

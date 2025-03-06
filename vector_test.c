@@ -145,6 +145,10 @@ int main() {
 
   printf("exists at position %d\n", exists);
 
+  struct person *found = (struct person *)struct_v->get(struct_v, exists);
+
+  printf("found person name: %s, age: %d\n", found->name, found->age);
+
   // struct_v->delete_at(struct_v, 2);
 
   struct_v->print_vector(struct_v);
